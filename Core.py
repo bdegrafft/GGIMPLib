@@ -4,20 +4,20 @@ except:
     pass
 import traceback
 
-def initalize(height=2000,width=2000,numLayers=1,fill=True,debug=True):#add undogroup here and in finalize
+def initalize(height=2000,width=2000,layers=1,fill=True,debug=True):#add undogroup here and in finalize
     img = gimp.Image(height, width, RGB)
-    layers=[]
+    layerList=[]
     if debug:
         pass
     else:
         pdb.gimp_image_undo_group_start(img)
-    for l in range(numLayers):
+    for l in range(layers):
         new=gimp.Layer(img, "Layer {}".format(l), height, width, RGB_IMAGE, 100, NORMAL_MODE)
         img.add_layer(new, -1)
         if fill==True:
             new.fill(BACKGROUND_FILL)
-        layers.append(new)
-    return img,layers
+        layerList.append(new)
+    return img,layerList
 def finalize(img):
         pdb.gimp_image_flatten(img)
         gimp.Display(img)
